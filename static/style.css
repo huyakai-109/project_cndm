@@ -1,0 +1,53 @@
+/* Định dạng toàn trang */
+body {
+    font-family: "Arial", sans-serif;
+    background-color: #e9ecef;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+/* Định dạng container chính */
+.welcome-container {
+    text-align: center;
+    background-color: #fff;
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+    margin-bottom: 20px;
+    color: #343a40;
+}
+
+/* Định dạng các nút */
+.welcome-button {
+    padding: 10px 20px;
+    font-size: 16px;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    margin: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.button-one {
+    background-color: #007bff;
+}
+
+.button-one:hover {
+    background-color: #0056b3;
+}
+
+.button-multiple {
+    background-color: #28a745;
+}
+
+.button-multiple:hover {
+    background-color: #1e7e34;
+}

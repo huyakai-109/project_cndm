@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Multiple Patient Prediction</title>
+        <link rel="stylesheet" href="../static/khambenh2.css" />
+    </head>
+    <body>
+        <div class="navigation">
+            <a href="index.html" class="back-button">Back</a>
+        </div>
+        <div class="upload-container">
+            <h1>Tải dữ liệu</h1>
+            <form id="uploadForm">
+                <input
+                    type="file"
+                    id="excelFile"
+                    name="excelFile"
+                    accept=".xlsx, .xls"
+                />
+                <button type="button" id="predictButton">Dự đoán</button>
+            </form>
+            <div id="uploadResult"></div>
+        </div>
+
+        <script src="../js/script_ex.js"></script>
+    </body>
+</html>
