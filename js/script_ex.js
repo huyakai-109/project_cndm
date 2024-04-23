@@ -1,9 +1,15 @@
-document.getElementById('predictButton').addEventListener('click', function () {
-    var formData = new FormData();
-    var fileInput = document.getElementById('excelFile');
-    if (fileInput.files.length > 0) {
-        var file = fileInput.files[0];
-        formData.append('excelFile', file);
+document.addEventListener('DOMContentLoaded', function () {
+    document.getElementById('predictButton').addEventListener('click', function (event) {
+        event.preventDefault(); // Prevent default form submission
+
+        var fileInput = document.getElementById('excelFile');
+        if (fileInput.files.length === 0) {
+            alert('Please select a file to upload.');
+            return;
+        }
+
+        var formData = new FormData();
+        formData.append('excelFile', fileInput.files[0]);
 
         fetch('http://127.0.0.1:5000/predict_excel', {
             method: 'POST',
@@ -11,36 +17,24 @@ document.getElementById('predictButton').addEventListener('click', function () {
         })
             .then(response => {
                 if (!response.ok) {
-                    throw new Error('Network response was not ok: ' + response.statusText);
+                    throw new Error('Network response was not ok');
                 }
                 return response.blob();
             })
             .then(blob => {
-                // Create a download link for the blob
                 var url = window.URL.createObjectURL(blob);
+                var resultDiv = document.getElementById('uploadResult');
+                resultDiv.innerHTML = ''; // Clear current results
+
                 var downloadLink = document.createElement('a');
                 downloadLink.href = url;
                 downloadLink.download = 'predicted_results.xlsx';
-                downloadLink.textContent = 'Click here to download the predicted results';
-                downloadLink.style.display = 'block'; // Make sure the link is visible
-
-                var resultDiv = document.getElementById('uploadResult');
-                resultDiv.innerHTML = ''; // Clear previous results
+                downloadLink.textContent = 'Download Predicted Results';
                 resultDiv.appendChild(downloadLink);
-
-                // Automatically trigger download for the user
-                downloadLink.click();
-
-                // Delay revoking the URL for 30 seconds to ensure user has enough time to interact
-                setTimeout(() => {
-                    window.URL.revokeObjectURL(url);
-                }, 30000);
             })
             .catch(error => {
-                console.error('Error:', error);
-                document.getElementById('uploadResult').textContent = 'An error occurred.';
+                console.error('There was a problem with the fetch operation:', error);
+                document.getElementById('uploadResult').textContent = 'Unable to download file.';
             });
-    } else {
-        alert('Please select a file to upload.');
-    }
+    });
 });
