@@ -1,10 +1,13 @@
-document.getElementById('predictionForm').addEventListener('submit', function (event) {
+document.getElementById('predictionForm').addEventListener('submit', function(event) {
     event.preventDefault(); // Ngăn chặn hành vi gửi form mặc định
 
     // Lấy giá trị từ form và chuyển đổi sang số khi cần
+    const scheducedDate = new Date(document.getElementById('scheduced_date').value);
+    const appointmentDate = new Date(document.getElementById('appointment_date').value);
+
     const formData = {
         Gender: document.getElementById('gender').value === 'Female' ? 1 : 0,
-        DaysBetween: parseInt(document.getElementById('days_between').value, 10),
+        DaysBetween: parseInt((appointmentDate - scheducedDate)), // Số ngày giữa hai ngày
         Age: parseInt(document.getElementById('age').value, 10),
         Scholarship: document.getElementById('scholarship').checked ? 1 : 0,
         Hipertension: document.getElementById('hypertension').checked ? 1 : 0,
@@ -15,12 +18,12 @@ document.getElementById('predictionForm').addEventListener('submit', function (e
 
     // Gửi yêu cầu đến Flask API
     fetch('http://127.0.0.1:5000/predict', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData) // Chuyển đổi data thành JSON
-    })
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(formData) // Chuyển đổi data thành JSON
+        })
         .then(response => response.json())
         .then(data => {
             // Hiển thị kết quả
@@ -32,4 +35,3 @@ document.getElementById('predictionForm').addEventListener('submit', function (e
             console.error('Error when calling the API:', error);
         });
 });
-
